@@ -15,15 +15,15 @@
 
 /* Colores de borde según prioridad (se añadirán como clase extra) */
 .prioritat-alta {
-  border-left: 5px solid #ef4444; /* Rojo */
+  border-left: 5px solid #ef4444; /* Vermell */
 }
 
 .prioritat-mitjana {
-  border-left: 5px solid #facc15; /* Amarillo */
+  border-left: 5px solid #facc15; /* Taronja */
 }
 
 .prioritat-baixa {
-  border-left: 5px solid #10b981; /* Verde */
+  border-left: 5px solid #10b981; /* Verd */
 }
 
 .data-vencuda {
