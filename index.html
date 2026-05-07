@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban DAW - Gestió de Tasques</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="css/estils.css">
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <header class="bg-gray-900 text-white p-4 shadow-md">
+        <h1 class="text-2xl font-bold text-center">Tauler Kanban</h1>
+    </header>
+
+   <main class="container mx-auto p-4">
+        <section class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4 border-b pb-2">Afegir Tasca</h2>
+            <form id="form-tasca" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Títol (Obligatorio) -->
+                <div class="col-span-2">
+                    <label for="titol" class="block text-sm font-medium text-gray-700">Títol <span class="text-red-500">*</span></label>
+                    <input type="text" id="titol" name="titol" required 
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                </div>
+                <!-- Descripció -->
+                <div class="col-span-2">
+                    <label for="descripcio" class="block text-sm font-medium text-gray-700">Descripció</label>
+                    <textarea id="descripcio" name="descripcio" rows="3" 
+                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
+                </div>
+                <!-- Prioritat -->
+                <div>
+                    <label for="prioritat" class="block text-sm font-medium text-gray-700">Prioritat</label>
+                    <select id="prioritat" name="prioritat" 
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                        <option value="baixa">Baixa</option>
+                        <option value="mitjana" selected>Mitjana</option>
+                        <option value="alta">Alta</option>
+                    </select>
+                </div>
+                <!-- Data límit -->
+                <div>
+                    <label for="data-venciment" class="block text-sm font-medium text-gray-700">Data límit</label>
+                    <input type="date" id="data-venciment" name="data-venciment" 
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                </div>
+                <!-- Botones -->
+                <div class="col-span-2 flex justify-end gap-2">
+                    <button type="submit" id="btn-submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow">
+                        Crear Tasca
+                    </button>
+                    <button type="button" id="btn-cancelar" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded shadow hidden">
+                        Cancel·lar
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
+            <aside class="lg:col-span-3 bg-white rounded-lg shadow p-4">
+                <h2 class="text-lg font-semibold mb-3">Filtres i Cerca</h2>
+                <div class="flex flex-wrap gap-4 items-end">
+                    <div>
+                        <label for="filtre-estat" class="block text-sm font-medium text-gray-700">Estat</label>
+                        <select id="filtre-estat" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                            <option value="tots">Tots</option>
+                            <option value="perFer">Per fer</option>
+                            <option value="enCurs">En curs</option>
+                            <option value="fet">Fet</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filtre-prioritat" class="block text-sm font-medium text-gray-700">Prioritat</label>
+                        <select id="filtre-prioritat" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                            <option value="totes">Totes</option>
+                            <option value="baixa">Baixa</option>
+                            <option value="mitjana">Mitjana</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                    <div class="flex-grow">
+                        <label for="cerca-text" class="block text-sm font-medium text-gray-700">Cercar</label>
+                        <input type="text" id="cerca-text" placeholder="Títol o descripció..." 
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                </div>
+            </aside>
+
+            <aside class="bg-white rounded-lg shadow p-4">
+                <h2 class="text-lg font-semibold mb-3">Estadístiques</h2>
+                <div id="estadistiques-panel" class="space-y-1 text-sm">
+                    <p class="flex justify-between"><span>Total tasques:</span> <span id="total-tasques" class="font-bold">0</span></p>
+                    <p class="flex justify-between"><span>Per fer:</span> <span id="count-perFer" class="font-bold">0</span></p>
+                    <p class="flex justify-between"><span>En curs:</span> <span id="count-enCurs" class="font-bold">0</span></p>
+                    <p class="flex justify-between"><span>Fet:</span> <span id="count-fet" class="font-bold">0</span></p>
+                    <hr class="my-2">
+                    <p class="flex justify-between"><span>Completat:</span> <span id="percentatge-completat">0%</span></p>
+                </div>
+            </aside>
+        </div>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Columna PER FER -->
+            <article class="bg-gray-50 rounded-lg shadow p-4 border-t-4 border-blue-400">
+                <h3 class="font-bold text-lg mb-3 flex justify-between items-center">
+                    Per fer
+                    <span class="bg-blue-200 text-blue-800 text-sm px-2 py-1 rounded-full">0</span>
+                </h3>
+                <div id="col-perFer" class="space-y-2 min-h-[200px]">
+                    <!-- Aquí s'injectaran les tasques amb JS -->
+                    <p class="text-gray-400 text-sm text-center italic">Sense tasques</p>
+                </div>
+            </article>
+
+            <!-- Columna EN CURS -->
+            <article class="bg-gray-50 rounded-lg shadow p-4 border-t-4 border-yellow-400">
+                <h3 class="font-bold text-lg mb-3 flex justify-between items-center">
+                    En curs
+                    <span class="bg-yellow-200 text-yellow-800 text-sm px-2 py-1 rounded-full">0</span>
+                </h3>
+                <div id="col-enCurs" class="space-y-2 min-h-[200px]">
+                    <p class="text-gray-400 text-sm text-center italic">Sense tasques</p>
+                </div>
+            </article>
+
+            <!-- Columna FET -->
+            <article class="bg-gray-50 rounded-lg shadow p-4 border-t-4 border-green-400">
+                <h3 class="font-bold text-lg mb-3 flex justify-between items-center">
+                    Fet
+                    <span class="bg-green-200 text-green-800 text-sm px-2 py-1 rounded-full">0</span>
+                </h3>
+                <div id="col-fet" class="space-y-2 min-h-[200px]">
+                    <p class="text-gray-400 text-sm text-center italic">Sense tasques</p>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-4 mt-8 text-sm">
+        <p>&copy; 2026 - Desenvolupament d'Aplicacions Web (DAW06) | Projecte Kanban | Omar Ortega Rodríguez</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/* Estils para las tarjets de la task */
+.tasca-card {
+  transition: all 0.2s ease-in-out;
+  background-color: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+.tasca-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Colores de borde según prioridad (se añadirán como clase extra) */
+.prioritat-alta {
+  border-left: 5px solid #ef4444; /* Rojo */
+}
+
+.prioritat-mitjana {
+  border-left: 5px solid #facc15; /* Amarillo */
+}
+
+.prioritat-baixa {
+  border-left: 5px solid #10b981; /* Verde */
+}
+
+.data-vencuda {
+  color: #ef4444;
+  font-weight: 500;
+}
