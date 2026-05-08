@@ -146,6 +146,7 @@ function actualitzarEstadistiques() {
   const fet = tasques.filter((t) => t.estat === "fet").length;
   const percentatge = total === 0 ? 0 : Math.round((fet / total) * 100);
 
+  // Actualitza el panell lateral d'estadístiques
   const elTotal = document.getElementById("total-tasques");
   const elPerFer = document.getElementById("count-perFer");
   const elEnCurs = document.getElementById("count-enCurs");
@@ -157,6 +158,15 @@ function actualitzarEstadistiques() {
   if (elEnCurs) elEnCurs.textContent = enCurs;
   if (elFet) elFet.textContent = fet;
   if (elPercentatge) elPercentatge.textContent = `${percentatge}%`;
+
+  // Actualitza els comptadors de les capçaleres de les columnes (correcció Issue 5)
+  const elPerFerHeader = document.getElementById("count-perFer-header");
+  const elEnCursHeader = document.getElementById("count-enCurs-header");
+  const elFetHeader = document.getElementById("count-fet-header");
+
+  if (elPerFerHeader) elPerFerHeader.textContent = perFer;
+  if (elEnCursHeader) elEnCursHeader.textContent = enCurs;
+  if (elFetHeader) elFetHeader.textContent = fet;
 }
 
 // ========= RENDERITZACIÓ (ISSUE 3 + 4) =========
