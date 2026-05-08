@@ -1,32 +1,110 @@
-/* Estils para las tarjets de la task */
+/* =========================================
+   KANBAN DAW06 - ESTILS GENERALS
+   ========================================= */
+
+/* Reset bàsic i tipografia */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f4f6; /* Gray-100 de Tailwind fallback */
+    color: #1f2937;
+}
+
+/* =========================================
+   ISSUE 3 & 5: ESTILS DE LES TARGETES (TASQUES)
+   ========================================= */
+
 .tasca-card {
-  transition: all 0.2s ease-in-out;
-  background-color: white;
-  border-radius: 0.375rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  padding: 0.75rem;
-  border: 1px solid #e5e7eb;
+    background-color: white;
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease-in-out;
+    cursor: default;
 }
 
 .tasca-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
 }
 
-/* Colores de borde según prioridad (se añadirán como clase extra) */
+/* Vores de color segons prioritat */
 .prioritat-alta {
-  border-left: 5px solid #ef4444; /* Vermell */
+    border-left: 5px solid #ef4444 !important; /* Vermell */
 }
 
 .prioritat-mitjana {
-  border-left: 5px solid #facc15; /* Taronja */
+    border-left: 5px solid #facc15 !important; /* Taronja */
 }
 
 .prioritat-baixa {
-  border-left: 5px solid #10b981; /* Verd */
+    border-left: 5px solid #10b981 !important; /* Verd */
 }
 
+/* Estil per a dates vencudes (opcional visualment) */
 .data-vencuda {
-  color: #ef4444;
-  font-weight: 500;
+    color: #ef4444;
+    font-weight: bold;
+}
+
+/* Botons dins de la targeta */
+.tasca-card button, 
+.tasca-card select {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.tasca-card .btn-editar:hover {
+    background-color: #dbeafe; /* Blue-100 */
+}
+
+.tasca-card .btn-eliminar:hover {
+    background-color: #fee2e2; /* Red-100 */
+}
+
+/* =========================================
+   ISSUE 5: RESPONSIVE (MÒBIL)
+   ========================================= */
+
+/* Ajustos per a pantalles petites (< 640px) */
+@media (max-width: 640px) {
+    /* Reduir padding general del contenidor principal si cal */
+    main.container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Targetes més compactes en mòbil */
+    .tasca-card {
+        padding: 0.75rem;
+    }
+
+    /* Fer que els controls de la targeta (select/botons) ocupin tot l'ample */
+    .tasca-card .flex-wrap {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .tasca-card select,
+    .tasca-card button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        justify-content: center;
+    }
+
+    /* Ajustar mida del títol principal */
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Ajustar formulari en mòbil */
+    form.grid {
+        gap: 0.75rem;
+    }
 }
